@@ -1,6 +1,6 @@
 # splitpea: SPLicing InTeractions PErsonAlized
 
-Here we present, Splitpea, a method for calculating network rewiring changes due to splicing.
+Here we present Splitpea, a method for calculating network rewiring changes due to splicing.
 
 Splitpea takes differential exons in the form of PSI values and combines them
 with domain-domain interactions (DDI) and protein-protein interactions (PPI) to
@@ -58,34 +58,32 @@ these reference files can be manually assembled, we have provided these in the
 ### Spliced Exon Data
 
 Splitpea currently uses spliced exon data from the IRIS project. This dataset is too
-large to be stored on GitHub so only a small sample set is provided. The full set of data used is
+large to be stored on GitHub, so only a small sample set is provided. The full set of data used is
 available in several processed forms via [Zenodo](https://zenodo.org). If you wish to use
 this data with Splitpea please first download from Zenodo and upload as a replacement to the sample
 data in the `examples` splitpea directory.
 
 ## Running Splitpea
 
-To illustrate how to use Splitpea we show how it can be run to generate both
+To illustrate how to use Splitpea, we show how it can be run to generate both
 patient-specific rewired networks for individual pancreatic cancer
 samples, as well a consensus network of PPI rewiring events across
 all pancreatic cancer samples.
 
-
 As the first step, we will to create a background level summary of splicing changes in
-the normal pancreas. The following script will
-take alternatively spliced exon data and create mean and median summaries
-over all exon level coordinates across normal and tumor samples.
+the normal pancreas. The following script will take alternatively spliced exon data and 
+create mean and median summaries over all exon level coordinates across normal and tumor samples.
 
 ```sh
 python src/combine_spliced_exons.py
 ```
 
 Next, calculate changes in PSI values (delta PSI) between each cancer sample
-relative to the summarized normal pancreas data. Here we also empirically
+relative to the summarized normal pancreatic data. Here, we also empirically
 calculate a p-value for each delta PSI.
 
 ```sh
-RScript delta_psi.R
+Rscript delta_psi.R
 ```
 
 Construct the background PPI network needed for later downstream
@@ -98,8 +96,8 @@ python src/get_background_ppi.py
 
 Splitpea takes the preprocessed delta PSI values to generate a
 network with rewired edges (as both a `.pickle` and `.dat` file). In our
-case, we have a delta PSI file for each pancreatic cancer sample. Thus we
-provide splitpea with the directory containing these delta PSI files as
+case, we have a delta PSI file for each pancreatic cancer sample. Thus, we
+provide Splitpea with the directory containing these delta PSI files as
 well as an output directory for the final networks. 
 
 ```sh
@@ -108,8 +106,8 @@ well as an output directory for the final networks.
 python src/splitpea.py -i examples/PAAD --skip 1 -o output/PAAD -v
 ```
 
-So far we have generated sample level networks, to get one summary network for
-pancreatic cancer (the consensus network of interactions) we need to run
+So far, we have generated sample level networks. To get one summary network for
+pancreatic cancer (the consensus network of interactions), we need to run
 a script to summarize and combine across the patient samples.
 
 ```sh
