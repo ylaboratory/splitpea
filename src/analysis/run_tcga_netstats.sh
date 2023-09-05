@@ -3,7 +3,7 @@
 src_dir=$(dirname "$0")
 proj_dir=$(cd "$src_dir"/../ || exit; pwd)
 
-data_dir="$proj_dir"/examples/TCGA/IRIS
+data_dir="$proj_dir"/examples/
 cancer_types=(BRCA PAAD)
 
 net_dir="$proj_dir"/output

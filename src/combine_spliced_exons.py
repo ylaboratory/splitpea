@@ -10,7 +10,7 @@ from pathlib import Path
 from statistics import mean, median
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-iris_path = str(BASE_DIR) + "/examples/TCGA/IRIS"
+iris_path = str(BASE_DIR) + "/examples"
 
 
 def get_nums_list(s):

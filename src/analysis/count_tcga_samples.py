@@ -8,7 +8,7 @@ tcga_meta = {}
 header = True
 tmp_counts = {'primary': 0, 'norm': 0}
 
-with open('examples/TCGA/TCGA_metadata.csv', 'r') as f:
+with open('examples/TCGA_metadata.csv', 'r') as f:
     for line in f:
         if header:
             header = False
@@ -26,7 +26,7 @@ with open('examples/TCGA/TCGA_metadata.csv', 'r') as f:
 #print(tcga_meta.keys())
 print('total count in metadata: ' + str(tmp_counts))
 
-for fn in os.listdir('examples/TCGA/'):
+for fn in os.listdir('examples/'):
     if fn == 'TCGA_metadata.csv':
         continue
     print(fn)
@@ -34,7 +34,7 @@ for fn in os.listdir('examples/TCGA/'):
     mapped = 0
     norm_mapped = 0
     unmapped = set()
-    with open('examples/TCGA/' + fn, 'r') as f:
+    with open('examples/' + fn, 'r') as f:
         for line in f:
             words = line.strip().split("\t")
             samples = words[10:]

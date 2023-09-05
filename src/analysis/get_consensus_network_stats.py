@@ -15,13 +15,13 @@ cancers = ['BRCA', 'PAAD']
 # thresholds = [0.1, 0.25, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99, 1]
 thresholds = [0.8]
 
-# out = open(base_dir + "/results/consensus_threshold.lcc_sizes.txt", 'w')
+# out = open(base_dir + "/output/consensus_threshold.lcc_sizes.txt", 'w')
 # out.write('\t'.join(['cancer', 'direction', 'threshold', 'num_nodes', 'num_edges']) + '\n')
 for c in cancers:
     print('[' + time.strftime("%H:%M:%S", time.localtime()) + "] Loading " + c + " consensus networks...")
 
-    c_consensus_neg = pickle.load(open(base_dir + "/results/" + c + "_consensus_neg.pickle", 'rb'))
-    c_consensus_pos = pickle.load(open(base_dir + "/results/" + c + "_consensus_pos.pickle", 'rb'))
+    c_consensus_neg = pickle.load(open(base_dir + "/output/" + c + "_consensus_neg.pickle", 'rb'))
+    c_consensus_pos = pickle.load(open(base_dir + "/output/" + c + "_consensus_pos.pickle", 'rb'))
 
 #     # cneg_largest_cc = c_consensus_neg.copy()
 #     # cpos_largest_cc = c_consensus_pos.copy() 
@@ -50,15 +50,15 @@ for c in cancers:
         if not nx.is_empty(thres_pos):
             thres_pos = thres_pos.subgraph(max(nx.connected_components(thres_pos), key=len)).copy()
 
-        with open(base_dir + "/results/" + c + "_consensus_neg.thres_" + str(t) + ".pickle", 'wb') as out:
+        with open(base_dir + "/output/" + c + "_consensus_neg.thres_" + str(t) + ".pickle", 'wb') as out:
             print(thres_neg)
             pickle.dump(thres_neg, out)
         
-        with open(base_dir + "/results/" + c + "_consensus_pos.thres_" + str(t) + ".pickle", 'wb') as out:
+        with open(base_dir + "/output/" + c + "_consensus_pos.thres_" + str(t) + ".pickle", 'wb') as out:
             print(thres_pos)
             pickle.dump(thres_pos, out)
 
-        with open(base_dir + "/results/" + c + "_consensus_joint.thres_" + str(t) + ".pickle", 'wb') as out:
+        with open(base_dir + "/output/" + c + "_consensus_joint.thres_" + str(t) + ".pickle", 'wb') as out:
             print(nx.compose(thres_neg, thres_pos))
             pickle.dump(nx.compose(thres_neg, thres_pos), out) 
 

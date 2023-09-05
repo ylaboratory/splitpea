@@ -30,8 +30,8 @@ logger = logging.getLogger('diff_exon')
 
 # file path constants
 base_dir = str(Path(__file__).resolve().parent.parent)
-ppif = base_dir + "/interactions/human_ppi_0.5.dat"
-ddif = base_dir + "/interactions/ddi_0.5.dat"
+ppif = base_dir + "/reference/human_ppi_0.5.dat"
+ddif = base_dir + "/reference/ddi_0.5.dat"
 entrezpfamf = base_dir + "/reference/human_entrez_pfam.txt"
 pfamcoordsf = base_dir + "/reference/human_pfam_genome_coords_sorted.txt.gz"
 tbf = base_dir + "/reference/human_pfam_genome_coords_sorted.txt.gz"

@@ -8,11 +8,11 @@ library(ggplot2)
 # ------------
 # mean
 # ------------
-can_type = 'BRCA'
-outdir = paste0("examples/TCGA/IRIS/", can_type, "/")
-gtex.fn = "examples/TCGA/IRIS/splicing_matrix.SE.cov10.GTEx_Breast.txt"
-tcga.fn = paste0('examples/TCGA/IRIS/splicing_matrix.SE.cov10.TCGA_',can_type,'_T.txt')
-summarized.prefix = 'examples/TCGA/IRIS/GTEx_Breast_combined'
+can_type = 'PAAD'
+outdir = paste0("examples/", can_type, "/")
+gtex.fn = "examples/splicing_matrix.SE.cov10.GTEx_Pancreas.txt"
+tcga.fn = paste0('examples/splicing_matrix.SE.cov10.TCGA_',can_type,'_T.txt')
+summarized.prefix = 'examples/GTEx_Pancreas_combined'
 
 gtex = fread(paste0(summarized.prefix,'_mean.txt'), sep='\t')
 gtex.all = fread(gtex.fn, sep = '\t')
@@ -94,13 +94,13 @@ if (!dir.exists(paste0(outdir, "median/")))
 {
   dir.create(paste0(outdir, "median/"))
 }
-if(!dir.exists(paste0('out/plots/mean/', can_type)))
+if(!dir.exists(paste0('output/plots/mean/', can_type)))
 {
-  dir.create(paste0('out/plots/mean/', can_type))
+  dir.create(paste0('output/plots/mean/', can_type))
 }
-if(!dir.exists(paste0('out/plots/median/', can_type)))
+if(!dir.exists(paste0('output/plots/median/', can_type)))
 {
-  dir.create(paste0('out/plots/median/', can_type))
+  dir.create(paste0('output/plots/median/', can_type))
 }
 
 
@@ -198,7 +198,7 @@ for (sam in tcga.sams)
   ggplot(joint, aes(x=delta.psi, y=-log10(pval + 0.001))) + geom_point() + theme_bw() +
     xlim(-1, 1) + ggtitle(sam)
   
-  ggsave(paste0('out/plots/median/', can_type, '/', sam,'-volcano.pdf'), width = 6, height = 6)
+  ggsave(paste0('output/plots/median/', can_type, '/', sam,'-volcano.pdf'), width = 6, height = 6)
 }
 
 

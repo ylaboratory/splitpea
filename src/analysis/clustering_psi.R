@@ -12,12 +12,12 @@ library(viridis)
 can_type = 'PAAD'
 
 # directory containing the network files
-base_dir = paste0("examples/TCGA/IRIS/", can_type, "/mean")
+base_dir = paste0("examples/", can_type, "/mean")
 
 # read in the delta.psi values across files
 # and store into a matrix
 fns <- list.files(base_dir, pattern="*.txt", full.names=TRUE)
-sam.names <- gsub('examples/TCGA/IRIS/PAAD/mean/', '', fns)
+sam.names <- gsub('examples/PAAD/mean/', '', fns)
 sam.names <- gsub('-psi.txt', '', sam.names)
 l <- lapply(fns, fread, sep="\t")
 names(l) <- sam.names
@@ -43,7 +43,7 @@ heatmap.2(m, trace = 'none', density.info = 'none', scale='none',
           labRow = F, dendrogram='column', col=viridis, keysize=1)
 
 # add meta data
-tcga.meta = fread('examples/TCGA/TCGA_metadata.csv', sep=',')
+tcga.meta = fread('examples/TCGA_metadata.csv', sep=',')
 tcga.meta = tcga.meta[entity_submitter_id %in% names(mat.clean)]
 tcga.meta = tcga.meta[, c('entity_submitter_id', 'sample_types', 'center', 'ajcc_pathologic_stage',
                           'tissue_or_organ_of_origin', 'days_to_last_follow_up', 'primary_diagnosis',
@@ -77,7 +77,7 @@ ann = c_annot[,c('gender_c', 'age_c', 'stage_c', 'diag_c', 'site_c')]
 colnames(ann) <- c("sex", "age", 'stage', 'diagnosis', 'site')
 
 # multicolumn version
-pdf('out/plots/PAAD-delta-psi-heatmap.pdf')
+pdf('output/plots/PAAD-delta-psi-heatmap.pdf')
 heatmap.3(m, trace = 'none', density.info = 'none', scale='none', labCol = F,
           labRow = F, dendrogram='column', col=viridis,
           ColSideColors=as.matrix(ann))
@@ -89,12 +89,12 @@ dev.off()
 #    MAKE HEATMAP FOR BRCA
 # ----------------------------
 can_type = 'BRCA'
-base_dir = paste0("examples/TCGA/IRIS/", can_type, "/mean")
+base_dir = paste0("examples/", can_type, "/mean")
 
 # read in the delta.psi values across files
 # and store into a matrix
 fns <- list.files(base_dir, pattern="*.txt", full.names=TRUE)
-sam.names <- gsub(paste0('examples/TCGA/IRIS/', can_type ,'/mean/'), '', fns)
+sam.names <- gsub(paste0('examples/', can_type ,'/mean/'), '', fns)
 sam.names <- gsub('-psi.txt', '', sam.names)
 l <- lapply(fns, fread, sep="\t")
 names(l) <- sam.names
@@ -120,7 +120,7 @@ heatmap.2(m, trace = 'none', density.info = 'none', scale='none',
           labRow = F, dendrogram='column', col=viridis, keysize=1)
 
 # add meta data
-brca.meta = fread('examples/TCGA/BRCA_pam50.txt', sep="\t")
+brca.meta = fread('examples/BRCA_pam50.txt', sep="\t")
 brca.meta[, barcode := gsub('.{3}$', '', `Sample ID`)]
 brca.meta[, c("PX", "PY", 'PZ', 'type') := tstrsplit(`Sample ID`, "-", fixed=TRUE)]
 brca.meta[, PX := NULL]
@@ -129,7 +129,7 @@ brca.meta[, PZ := NULL]
 brca.meta = brca.meta[type != '11'] # remove the normal annotations
 
 
-tcga.meta = fread('examples/TCGA/TCGA_metadata.csv', sep=',')
+tcga.meta = fread('examples/TCGA_metadata.csv', sep=',')
 tcga.meta = tcga.meta[entity_submitter_id %in% names(mat.clean)]
 tcga.meta = tcga.meta[, c('entity_submitter_id', 'TCGABarcode', 'sample_types', 'center', 'ajcc_pathologic_stage',
                           'tissue_or_organ_of_origin', 'days_to_last_follow_up', 'primary_diagnosis',
@@ -165,7 +165,7 @@ ann = c_annot[,c('age_c', 'stage_c', 'diag_c', 'pam')]
 colnames(ann) <- c("age", 'stage', 'diagnosis', 'pam50')
 
 # multicolumn version
-pdf('out/plots/BRCA-delta-psi-heatmap.pdf')
+pdf('output/plots/BRCA-delta-psi-heatmap.pdf')
 heatmap.3(m, trace = 'none', density.info = 'none', scale='none', labCol = F,
           labRow = F, dendrogram='column', col=viridis,
           ColSideColors=as.matrix(ann))

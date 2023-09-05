@@ -3,7 +3,7 @@
 src_dir=$(dirname "$0")
 proj_dir=$(cd "$src_dir"/../ || exit; pwd)
 
-data_dir="$proj_dir"/examples/TCGA/IRIS
+data_dir="$proj_dir"/examples/
 cancer_types=(BRCA PAAD)
 
 output_dir="$proj_dir"/output
@@ -21,8 +21,8 @@ do
     do
         ipref=${i/-psi\.txt/}
         (
-            echo "$proj_dir"/src/diff_exon2net.py -i "$canc_in_dir"/$i --skip 1 -o "$canc_out_dir"/$ipref -v
-            python "$proj_dir"/src/diff_exon2net.py -i "$canc_in_dir"/$i --skip 1 -o "$canc_out_dir"/$ipref -v
+            echo "$proj_dir"/src/splitpea.py -i "$canc_in_dir"/$i --skip 1 -o "$canc_out_dir"/$ipref -v
+            python "$proj_dir"/src/splitpea.py -i "$canc_in_dir"/$i --skip 1 -o "$canc_out_dir"/$ipref -v
         ) &
         NPROC=$(($NPROC+1))
         if [ "$NPROC" -ge $parallel ]

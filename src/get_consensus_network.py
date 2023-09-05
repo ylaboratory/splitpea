@@ -68,10 +68,10 @@ for c in cancers:
         c_consensus_pos = comb_pos.copy()
         c_consensus_pos.graph['num_graphs'] += 1
 
-    with open(base_dir + "/results/" + c + "_consensus_neg.pickle", 'wb') as out:
+    with open(base_dir + "/output/" + c + "_consensus_neg.pickle", 'wb') as out:
         pickle.dump(c_consensus_neg, out)    
 
-    with open(base_dir + "/results/" + c + "_consensus_pos.pickle", 'wb') as out:
+    with open(base_dir + "/output/" + c + "_consensus_pos.pickle", 'wb') as out:
         pickle.dump(c_consensus_pos, out)    
     
 
