@@ -1,0 +1,9 @@
+reference/
+*.dat
+output/
+*.pyc
+out/
+examples/
+.Rhistory
+*.Rproj
+.Rproj.user
