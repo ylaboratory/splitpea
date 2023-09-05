@@ -105,7 +105,7 @@ well as an output directory for the final networks.
 ```sh
 # run splitpea to take a directory of sample PSI values and construct
 # sample level networks of rewiring changes
-python src/splitpea.py -i dir_of_sample_psi_files --skip 1 -o out_file_prefix -v
+python src/splitpea.py -i examples/PAAD --skip 1 -o output/PAAD -v
 ```
 
 So far we have generated sample level networks, to get one summary network for
