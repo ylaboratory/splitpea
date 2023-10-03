@@ -11,8 +11,8 @@ normal tissue as the background condition.
 
 ## Citation
 
-> [Splitpea: quantifying protein interaction network rewiring changes due to alternative splicing in cancer.](https://doi.org/10.1101/2023.09.04.556262)
-Dannenfelser R and Yao V. Preprint of an article published in Pacific Symposium on Biocomputing 2024.
+> Splitpea: quantifying protein interaction network rewiring changes due to alternative splicing in cancer.
+Dannenfelser R and Yao V. Preprint of an article published in Pacific Symposium on Biocomputing 2024. [https://doi.org/10.1101/2023.09.04.556262](https://doi.org/10.1101/2023.09.04.556262)
 
 ## Setup
 
