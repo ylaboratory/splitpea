@@ -59,7 +59,7 @@ these reference files can be manually assembled, we have provided these in the
 
 Splitpea currently uses spliced exon data from the IRIS project. This dataset is too
 large to be stored on GitHub, so only a small sample set is provided. The full set of data used is
-available in several processed forms via [Zenodo](https://zenodo.org). If you wish to use
+available with the final output files on [Zenodo](https://zenodo.org](https://zenodo.org/record/8401618). If you wish to use
 this data with Splitpea please first download from Zenodo and upload as a replacement to the sample
 data in the `examples` splitpea directory.
 
