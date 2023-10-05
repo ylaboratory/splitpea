@@ -12,7 +12,8 @@ normal tissue as the background condition.
 ## Citation
 
 > Splitpea: quantifying protein interaction network rewiring changes due to alternative splicing in cancer.
-Dannenfelser R and Yao V. Preprint of an article published in Pacific Symposium on Biocomputing 2024. [https://doi.org/10.1101/2023.09.04.556262](https://doi.org/10.1101/2023.09.04.556262)
+Dannenfelser R and Yao V. Preprint of an article published in Pacific Symposium on Biocomputing 2024. 
+[https://doi.org/10.1101/2023.09.04.556262](https://doi.org/10.1101/2023.09.04.556262)
 
 ## Setup
 
@@ -60,8 +61,8 @@ these reference files can be manually assembled, we have provided these in the
 Splitpea currently uses spliced exon data from the IRIS project. This dataset is too
 large to be stored on GitHub, so only a small sample set is provided. The full set of data used is
 available with the final output files on [Zenodo](https://zenodo.org/record/8401618). If you wish to use
-this data with Splitpea please first download from Zenodo and upload as a replacement to the sample
-data in the `examples` splitpea directory.
+this data with Splitpea please first download from Zenodo and use the downloaded spliced exon files
+in place of the example data below.
 
 ## Running Splitpea
 
@@ -72,10 +73,10 @@ all pancreatic cancer samples.
 
 As the first step, we will to create a background level summary of splicing changes in
 the normal pancreas. The following script will take alternatively spliced exon data and 
-create mean and median summaries over all exon level coordinates across normal and tumor samples.
+create mean summaries over all exon level coordinates across normal and tumor samples.
 
 ```sh
-python src/combine_spliced_exons.py
+python src/combine_spliced_exons.py example
 ```
 
 Next, calculate changes in PSI values (delta PSI) between each cancer sample
