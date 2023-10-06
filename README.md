@@ -15,6 +15,14 @@ normal tissue as the background condition.
 Dannenfelser R and Yao V. Preprint of an article published in Pacific Symposium on Biocomputing 2024. 
 [https://doi.org/10.1101/2023.09.04.556262](https://doi.org/10.1101/2023.09.04.556262)
 
+## Code Organization
+
+All of the code needed to run the base functionality of Splitpea is found
+in the `src` directory. Helper functions for installation and exporting
+for different software tools are found in the `src/utils` directory. 
+Scripts need to reproduce the analysis and tables in Splitpea manuscript
+can be found in `src/analysis`. 
+
 ## Setup
 
 Conda is required for installing all relevant dependencies needed to run Splitpea.
@@ -41,7 +49,8 @@ directly. To keep things self-contained, you could also install the binaries int
 and call / modify paths as needed.
 
 ```sh
-python src/utils/install_tabix.sh
+bash src/utils/install_tabix.sh
+bash src/utils/tabix_feats.sh
 ```
 
 ### R
@@ -84,7 +93,7 @@ relative to the summarized normal pancreatic data. Here, we also empirically
 calculate a p-value for each delta PSI.
 
 ```sh
-Rscript delta_psi.R
+Rscript src/delta_psi.R -o psis -s example/splicing_matrix.SE.cov10.GTEx_Pancreas_combined_mean.txt -b example/splicing_matrix.SE.cov10.GTEx_Pancreas.txt -t example/splicing_matrix.SE.cov10.TCGA_PAAD_T.txt 
 ```
 
 Construct the background PPI network needed for later downstream
@@ -101,10 +110,14 @@ case, we have a delta PSI file for each pancreatic cancer sample. Thus, we
 provide Splitpea with the directory containing these delta PSI files as
 well as an output directory for the final networks. 
 
+Here we use a bash script to parallelize and run Splitpea for each
+sample's psis. The `-p` flag is used to choose the number of cores
+for parallelization.
+
 ```sh
 # run splitpea to take a directory of sample PSI values and construct
 # sample level networks of rewiring changes
-python src/splitpea.py -i examples/PAAD --skip 1 -o output/PAAD -v
+bash run_splitpea_batch.sh -i psis -o output -p 4
 ```
 
 So far, we have generated sample level networks. To get one summary network for
@@ -113,14 +126,27 @@ a script to summarize and combine across the patient samples.
 
 ```sh
 # combine
-python src/get_consensus_network.py
+python src/get_consensus_network.py output
 ```
 
-## Code Organization
+## Analysis
 
-All of the code needed to run the base functionality of Splitpea is found
-in the `src` directory. Helper functions for installation and exporting
-for different software tools are found in the `src/utils` directory. 
-Scripts need to reproduce the analysis and tables in Splitpea manuscript
-can be found in `src/analysis`.
+The scripts needed to reproduce the analysis seen in the paper are in the
+`src/analysis` folder. These files assume that you have run Splitpea
+or have downloaded the patient specific networks for both breast cancer
+(BRCA) and pancreatic cancer (PAAD), as well as the consensus networks
+for each tumor type. The easiest setup is to download 
+`BRCA-patient-rewired-networks.zip`, `BRCA_consensus_networks.zip`,
+`PAAD-patient-rewired-networks.zip`, and  `PAAD_consensus_networks.zip`
+from [Zenodo](https://zenodo.org/record/8401618)
+and place them in a directory called `IRIS` in the main
+Splitpea folder. Once these files are downloaded or created you can generate the
+the main figures using the following scripts:
 
+- `clustering_psi.R`: contains the code for building the heatmaps in Figure 2
+- `something`: build the gains / and losses in Figure 3
+- `calc_network_stats.py`: stats for the individual networks
+- `get_consensus_network_stats.py`: stats for the consensus networks
+- `get_largestcc_sizes.py`:
+- `clustering_networks.ipynb`: generates network embeddings using FEATHER
+- `clustering_networks.R`: further analysis of the network embeddings (Figure 6)

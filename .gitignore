@@ -6,3 +6,4 @@ examples/
 .Rhistory
 *.Rproj
 .Rproj.user
+htslib-1.17/
