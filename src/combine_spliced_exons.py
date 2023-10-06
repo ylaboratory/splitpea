@@ -32,7 +32,7 @@ def get_nums_list(s):
     l = []
 
     for elm in s:
-        if elm != 'NaN':
+        if elm != 'NaN' and elm.strip() != "":
             l.append(float(elm))
 
     return l

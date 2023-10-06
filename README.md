@@ -85,7 +85,7 @@ the normal pancreas. The following script will take alternatively spliced exon d
 create mean summaries over all exon level coordinates across normal and tumor samples.
 
 ```sh
-python src/combine_spliced_exons.py example
+python src/combine_spliced_exons.py test-data
 ```
 
 Next, calculate changes in PSI values (delta PSI) between each cancer sample
@@ -93,7 +93,7 @@ relative to the summarized normal pancreatic data. Here, we also empirically
 calculate a p-value for each delta PSI.
 
 ```sh
-Rscript src/delta_psi.R -o psis -s example/splicing_matrix.SE.cov10.GTEx_Pancreas_combined_mean.txt -b example/splicing_matrix.SE.cov10.GTEx_Pancreas.txt -t example/splicing_matrix.SE.cov10.TCGA_PAAD_T.txt 
+Rscript src/delta_psi.R -o psis -s test-data/spliced_exons_gtex_pancreas_test_combined_mean.txt -b test-data/spliced_exons_gtex_pancreas_test.txt -t test-data/spliced_exons_tcga_paad_test.txt
 ```
 
 Construct the background PPI network needed for later downstream
@@ -117,7 +117,7 @@ for parallelization.
 ```sh
 # run splitpea to take a directory of sample PSI values and construct
 # sample level networks of rewiring changes
-bash run_splitpea_batch.sh -i psis -o output -p 4
+bash src/run_splitpea_batch.sh -i psis -o output -p 4
 ```
 
 So far, we have generated sample level networks. To get one summary network for
