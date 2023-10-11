@@ -15,7 +15,7 @@ base_dir = str(Path(__file__).resolve().parent.parent)
 net_dir = base_dir + "/IRIS/"
 cancers = ['BRCA', 'PAAD']
 
-out = open(base_dir + "/results/tcga_splitpea_network.largest_ccs.txt", 'w')
+out = open(base_dir + "/IRIS/tcga_splitpea_network.largest_ccs.txt", 'w')
 out.write('\t'.join(["cancer", "sample", "direction", "orig_nodes", "orig_edges", "lcc_nodes", "lcc_edges"]) + '\n')
 
 g = pickle.load(open(base_dir + "/reference/human_ppi_ddi_bg.pickle", 'rb'))
