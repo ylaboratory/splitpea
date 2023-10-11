@@ -1,12 +1,22 @@
 # code for the analysis depicted in figure 6
+# run after building the BRCA-PAAD-FEATHER-matrix.txt file
+# with analysis/clustering_networks.ipynb
+if (!require(data.table)) install.packages('data.table')
+if (!require(ggplot2)) install.packages('ggplot2')
+if (!require(dbscan)) install.packages('dbscan')
+if (!require(rstudioapi)) install.packages('rstudioapi')
+
 library('data.table')
 library('ggplot2')
 library('dbscan')
+library('rstudioapi')
 
-combo_embed = fread('examples/BRCA-PAAD-FEATHER-matrix.txt', header=T)
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
-tcga_meta = fread('examples/TCGA/TCGA_metadata.csv')
-brca_meta = fread('examples/TCGA/BRCA_additional_annotations.txt')
+
+combo_embed = fread('BRCA-PAAD-FEATHER-matrix.txt', header=T)
+
+tcga_meta = fread('examples/TCGA_metadata.csv')
 
 tcga_meta = tcga_meta[, c('entity_submitter_id', 'sample_types', 'center', 'ajcc_pathologic_stage',
                                   'tissue_or_organ_of_origin', 'days_to_last_follow_up', 'days_to_death', 'primary_diagnosis',
@@ -15,13 +25,13 @@ tcga_meta = tcga_meta[, c('entity_submitter_id', 'sample_types', 'center', 'ajcc
 
 
 # get centralities
-hsa_gene_mappings = fread("examples/hsa_mapping_all.txt")
+hsa_gene_mappings = fread("reference/hsa_mapping_all.txt")
 hsa_symbol_entrez = unique(hsa_gene_mappings[,.(symbol, entrez)])
 
 bg_centralities = fread("reference/human_ppi_ddi_bg.centralities.txt")
 setnames(bg_centralities, c("entrez", "bg_degree", "bg_betweenness"))
 
-canc_dir = "/grain/vy3/splitpea/output/PAAD/mean/"
+canc_dir = "IRIS/PAAD-centralities/"
 paad_centralities = rbindlist(lapply(list.files(canc_dir, pattern="*centralities.txt"),
                                      function(x) data.table(tcga_samp_id = gsub(".centralities.txt", "", x),
                                                             fread(paste0(canc_dir, x)))))
@@ -35,7 +45,7 @@ paad_centralities[,':='(deg_bg=bg_degree-degree, pos_deg_bg=bg_degree-pos_degree
 
 
 
-canc_dir = "/grain/vy3/splitpea/output/BRCA/mean/"
+canc_dir = "IRIS/BRCA-centralities/"
 brca_centralities = rbindlist(lapply(list.files(canc_dir, pattern="*centralities.txt"),
                                      function(x) data.table(tcga_samp_id = gsub(".centralities.txt", "", x),
                                                             fread(paste0(canc_dir, x)))))
@@ -142,11 +152,9 @@ combo.dim.red[, cluster2 := ifelse(cluster2 == 0, paste0(cluster2, disease), clu
 
 ggplot(combo.dim.red, aes(x=pc1, y=pc2, color=as.factor(cluster))) + geom_point() + theme_classic() +
   scale_color_manual(values=c('#c0c0c0', '#ff7d00', '#78290f', '#15616d')) + labs(color='cluster')
-ggsave('/grain/rad4/splitpea/out/plots/pca-all-nets-dbclust.pdf', units='in', width=6, height=5)
 
 ggplot(combo.dim.red, aes(x=pc1, y=pc2, color=as.factor(disease))) + geom_point() + theme_classic() +
   scale_color_manual(values=c('#E69F00', '#0072B2')) + labs(color='cancer') 
-ggsave('/grain/rad4/splitpea/out/plots/pca-all-nets.pdf', units='in', width=6, height=5)
 
 ggplot(combo.dim.red, aes(x=pc1, y=pc2, color=as.factor(cluster2))) + geom_point() + theme_minimal()
 
@@ -185,7 +193,6 @@ ggplot(plot_top5[direction == 'gain']) +
   xlab("") + ylab("mean interactions gained / lost") +
   coord_flip() + theme_classic(base_size=12) + theme_classic() + labs(fill='cluster') + 
   scale_fill_manual(values=c('#c0c0c0', '#696969', '#ff7d00', '#78290f', '#15616d'))
-ggsave('/grain/rad4/splitpea/out/plots/net-clust-gains.pdf', units='in', width=6, height=5)
 
 
 ggplot(plot_top5[direction == 'lost']) +
@@ -193,5 +200,4 @@ ggplot(plot_top5[direction == 'lost']) +
   xlab("") + ylab("mean interactions gained / lost") +
   coord_flip() + theme_classic(base_size=12) + theme_classic() + labs(fill='cluster') + 
   scale_fill_manual(values=c('#c0c0c0', '#696969', '#ff7d00', '#78290f', '#15616d'))
-ggsave('/grain/rad4/splitpea/out/plots/net-clust-losses.pdf', units='in', width=6, height=5)
 

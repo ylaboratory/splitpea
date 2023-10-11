@@ -12,7 +12,7 @@ from pathlib import Path
 import glob
 
 base_dir = str(Path(__file__).resolve().parent.parent)
-net_dir = base_dir + "/output/"
+net_dir = base_dir + "/IRIS/"
 cancers = ['BRCA', 'PAAD']
 
 out = open(base_dir + "/results/tcga_splitpea_network.largest_ccs.txt", 'w')
@@ -31,7 +31,7 @@ out.write('\t'.join(["background",
 for c in cancers:
     print('[' + time.strftime("%H:%M:%S", time.localtime()) + "] Loading " + c + " networks...")
 
-    for f in glob.glob(net_dir + c + "/mean/*.pickle"):
+    for f in glob.glob(net_dir + c + "-pickle/*.pickle"):
         file_pref = f.split('/')[-1].split('.')[0]
         g = pickle.load(open(f, 'rb'))
         
