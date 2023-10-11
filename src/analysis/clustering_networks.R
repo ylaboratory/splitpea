@@ -3,10 +3,10 @@ library('data.table')
 library('ggplot2')
 library('dbscan')
 
-combo_embed = fread('/grain/rad4/splitpea/out/BRCA-PAAD-FEATHER-matrix.txt', header=T)
+combo_embed = fread('examples/BRCA-PAAD-FEATHER-matrix.txt', header=T)
 
-tcga_meta = fread('/grain/rad4/splitpea/examples/TCGA/TCGA_metadata.csv')
-brca_meta = fread('/grain/rad4/splitpea/examples/TCGA/BRCA_additional_annotations.txt')
+tcga_meta = fread('examples/TCGA/TCGA_metadata.csv')
+brca_meta = fread('examples/TCGA/BRCA_additional_annotations.txt')
 
 tcga_meta = tcga_meta[, c('entity_submitter_id', 'sample_types', 'center', 'ajcc_pathologic_stage',
                                   'tissue_or_organ_of_origin', 'days_to_last_follow_up', 'days_to_death', 'primary_diagnosis',
@@ -15,10 +15,10 @@ tcga_meta = tcga_meta[, c('entity_submitter_id', 'sample_types', 'center', 'ajcc
 
 
 # get centralities
-hsa_gene_mappings = fread("/grain/resources/gene_mappings/output/current/hsa_mapping_all.txt")
+hsa_gene_mappings = fread("examples/hsa_mapping_all.txt")
 hsa_symbol_entrez = unique(hsa_gene_mappings[,.(symbol, entrez)])
 
-bg_centralities = fread("/grain/vy3/splitpea/reference/human_ppi_ddi_bg.centralities.txt")
+bg_centralities = fread("reference/human_ppi_ddi_bg.centralities.txt")
 setnames(bg_centralities, c("entrez", "bg_degree", "bg_betweenness"))
 
 canc_dir = "/grain/vy3/splitpea/output/PAAD/mean/"

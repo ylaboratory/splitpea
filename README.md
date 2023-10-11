@@ -90,7 +90,8 @@ python src/combine_spliced_exons.py test-data
 
 Next, calculate changes in PSI values (delta PSI) between each cancer sample
 relative to the summarized normal pancreatic data. Here, we also empirically
-calculate a p-value for each delta PSI.
+calculate a p-value for each delta PSI. (Note that this script also constructs a 
+summary volcano plot as shown in Figure 4 of the manuscript.)
 
 ```sh
 Rscript src/delta_psi.R -o psis -s test-data/spliced_exons_gtex_pancreas_test_combined_mean.txt -b test-data/spliced_exons_gtex_pancreas_test.txt -t test-data/spliced_exons_tcga_paad_test.txt
@@ -135,18 +136,17 @@ The scripts needed to reproduce the analysis seen in the paper are in the
 `src/analysis` folder. These files assume that you have run Splitpea
 or have downloaded the patient specific networks for both breast cancer
 (BRCA) and pancreatic cancer (PAAD), as well as the consensus networks
-for each tumor type. The easiest setup is to download 
-`BRCA-patient-rewired-networks.zip`, `BRCA_consensus_networks.zip`,
-`PAAD-patient-rewired-networks.zip`, and  `PAAD_consensus_networks.zip`
-from [Zenodo](https://zenodo.org/record/8401618)
-and place them in a directory called `IRIS` in the main
+for each tumor type. The easiest setup is to run `src/setup_from_zenodo.sh` 
+which downloads `BRCA-patient-rewired-networks.zip`, `BRCA_consensus_networks.zip`,
+`PAAD-patient-rewired-networks.zip`, `PAAD_consensus_networks.zip`, 
+`BRCA-psi.zip`, and `PAAD-psi.zip` from [Zenodo](https://zenodo.org/record/8401618)
+extracts all files and places them in a directory called `IRIS` in the main
 Splitpea folder. Once these files are downloaded or created you can generate the
-the main figures using the following scripts:
+the main figures using the following scripts in the `analysis` folder:
 
-- `clustering_psi.R`: contains the code for building the heatmaps in Figure 2
-- `something`: build the gains / and losses in Figure 3
-- `calc_network_stats.py`: stats for the individual networks
-- `get_consensus_network_stats.py`: stats for the consensus networks
-- `get_largestcc_sizes.py`:
+- `clustering_psi.R`: code that takes delta psi values and generates clustered heatmaps with color legend bar with TCGA metadata (Figure 2)
+- `get_largestcc_sizes.py`: separated by directionality of each edge, calculates the size (# nodes, # edges) for each patient-specific network as well as the largest connected component (outputs the data table used to build Figure 3)
+- `get_consensus_network_stats.py`: calculates consensus networks at different thresholds (% agreement across all networks) and also outputs the number of nodes and edges for the corresponding consensus network
+- `analyze_tcga_netstats.R`: figure plotting code for proportion of edges across patient-specific networks (Figure 3) and positive/negative consensus network size change at different thresholds (Figure 5A-B)
 - `clustering_networks.ipynb`: generates network embeddings using FEATHER
 - `clustering_networks.R`: further analysis of the network embeddings (Figure 6)
