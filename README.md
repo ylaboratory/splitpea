@@ -1,5 +1,7 @@
 # splitpea: SPLicing InTeractions PErsonAlized
 
+![splitpea logo](splitpea-logo.jpg)
+
 Here we present Splitpea, a method for calculating network rewiring changes due to splicing.
 
 Splitpea takes differential exons in the form of PSI values and combines them
