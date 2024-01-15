@@ -1,4 +1,6 @@
 *.dat
+!reference/human_ppi_0.5.dat
+!reference/ddi_0.5.dat
 output/
 *.pyc
 out/
